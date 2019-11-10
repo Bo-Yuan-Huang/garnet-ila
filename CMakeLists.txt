@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.9.6)
 # PROJECT
 # name version language
 # ---------------------------------------------------------------------------- #
-project(${project_name} VERSION 0.1 LANGUAGES CXX)
+project(garnet VERSION 0.1 LANGUAGES CXX)
 
 # ---------------------------------------------------------------------------- #
 # VARIABLE
@@ -28,7 +28,7 @@ find_package(ilang REQUIRED)
 # ---------------------------------------------------------------------------- #
 add_executable(${MyTarget} 
   app/main.cc
-  src/${source_file_name}
+  src/garnet_top.cc
 )
 
 target_include_directories(${MyTarget} PRIVATE include)

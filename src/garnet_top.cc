@@ -1,12 +1,12 @@
-// File: ${source_file_name}
+// File: garnet_top.cc
 
-#include <${project_name}/${header_file_name}>
+#include <garnet/garnet_top.h>
 
 #include <ilang/util/log.h>
 
 namespace ilang {
 
-Ila ${top_method_name}(const std::string& model_name) {
+Ila GetGarnetIla(const std::string& model_name) {
   auto m = Ila(model_name);
 
   // define interface and architectural states

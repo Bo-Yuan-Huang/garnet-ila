@@ -1,10 +1,4 @@
-# ILA project template
+# Instrucion-Level Abstraction (ILA) of garnet
 
-To initialize the project with your customized name, run:
-
-```bash
-python3 script/init.py <project_name>
-```
-
-This will generate the template ILA project. 
-The directory `template` can be removed afterward.
+This ILA model is derived based on the [garnet](https://github.com/StanfordAHA/garnet) design.
+Check their [license](https://github.com/StanfordAHA/garnet/blob/master/LICENSE) for further details.
