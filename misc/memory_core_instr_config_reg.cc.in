@@ -1,0 +1,11 @@
+{ // write to config reg ${reg_name}
+  auto instr = m.NewInstr("WrConfigReg_${reg_name}");
+  SetDecodeForWrInstr(MEMORY_CORE_REG_${reg_name_upper}_ADDR);
+  SetUpdateForWrInstr(m, instr, MEMORY_CORE_REG_${reg_name_upper});
+}
+
+{ // read from config reg ${reg_name}
+  auto instr = m.NewInstr("RdConfigReg_${reg_name}");
+  SetDecodeForRdInstr(MEMORY_CORE_REG_${reg_name_upper}_ADDR);
+  SetUpdateForRdInstr(m, instr, MEMORY_CORE_REG_${reg_name_upper});
+}

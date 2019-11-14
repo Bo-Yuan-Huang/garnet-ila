@@ -1,0 +1,1 @@
+m.NewBvState(MEMORY_CORE_REG_${reg_name_upper}, MEMORY_CORE_REG_${reg_name_upper}_WIDTH);

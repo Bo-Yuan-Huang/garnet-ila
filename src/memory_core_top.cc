@@ -22,27 +22,51 @@
 // SOFTWARE.
 // =============================================================================
 
-// File: main.cc
+// File: memory_core_top.cc
 
 #include <garnet/garnet_top.h>
 
-#include <fstream>
+#include <garnet/memory_core_config.h>
 #include <ilang/util/log.h>
 
-using namespace ilang;
+namespace ilang {
 
-int main() {
-#if 0
-  auto garnet = GetGarnetIla("garnet");
-  std::ofstream fw("garnet.v");
-  garnet.ExportToVerilog(fw);
-  fw.close();
-#endif
+void MemoryCoreInstrConfigReg(Ila& m);
+void MemoryCoreStateIOPort(Ila& m);
+void MemoryCoreStateConfigReg(Ila& m);
 
-  auto memory_core = GetMemoryCoreIla("memory_core");
-  std::ofstream fw("memory_core.v");
-  memory_core.ExportToVerilog(fw);
-  fw.close();
+Ila GetMemoryCoreIla(const std::string& model_name) {
+  auto m = Ila(model_name);
 
-  return 0;
+  // define interface
+  MemoryCoreStateIOPort(m);
+
+  // define architectural state
+  MemoryCoreStateConfigReg(m);
+
+  // define ILA valid function
+  auto is_write_not_full =
+      m.input(MEMORY_CORE_IO_WEN_IN) & ~m.state(MEMORY_CORE_IO_FULL);
+
+  auto is_read_not_empty =
+      m.input(MEMORY_CORE_IO_REN_IN) & ~m.state(MEMORY_CORE_IO_EMPTY);
+
+  auto is_memory_mapped_address =
+      (m.input(MEMORY_CORE_IO_ADDR_IN) >= MEMORY_CORE_ADDR_MIN) &
+      (m.input(MEMORY_CORE_IO_ADDR_IN) < MEMORY_CORE_ADDR_MAX);
+
+  auto is_chain_write = m.input(MEMORY_CORE_IO_CHAIN_WEN_IN) &
+                        m.state(MEMORY_CORE_IO_CHAIN_VALID_OUT);
+
+  // TODO stall, switch_db, flush
+
+  m.SetValid(is_memory_mapped_address &
+             (is_write_not_full | is_read_not_empty | is_chain_write));
+
+  // define instructions - decode and state update function
+  MemoryCoreInstrConfigReg(m);
+
+  return m;
 }
+
+}; // namespace ilang

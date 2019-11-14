@@ -1,0 +1,2 @@
+#define MEMORY_CORE_IO_${port_name_upper} "${port_name}"
+#define MEMORY_CORE_IO_${port_name_upper}_WIDTH ${bit_width}

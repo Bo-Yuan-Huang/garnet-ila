@@ -1,0 +1,1 @@
+m.NewBv${port_type}(MEMORY_CORE_IO_${port_name_upper}, MEMORY_CORE_IO_${port_name_upper}_WIDTH);

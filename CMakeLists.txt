@@ -29,6 +29,10 @@ find_package(ilang REQUIRED)
 add_executable(${MyTarget} 
   app/main.cc
   src/garnet_top.cc
+  src/memory_core_instr_config_reg.cc
+  src/memory_core_state_config_reg.cc
+  src/memory_core_state_io_port.cc
+  src/memory_core_top.cc
 )
 
 target_include_directories(${MyTarget} PRIVATE include)

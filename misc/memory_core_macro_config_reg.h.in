@@ -1,0 +1,3 @@
+#define MEMORY_CORE_REG_${reg_name_upper} "${reg_name}"
+#define MEMORY_CORE_REG_${reg_name_upper}_ADDR ${reg_addr}
+#define MEMORY_CORE_REG_${reg_name_upper}_WIDTH ${reg_width}
