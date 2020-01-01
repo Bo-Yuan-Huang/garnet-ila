@@ -39,8 +39,8 @@ int main() {
   fw.close();
 #endif
 
-  auto memory_core = GetMemoryCoreIla("memory_core");
-  std::ofstream fw("memory_core.v");
+  auto memory_core = GetMemoryCoreIla("memory_core_ila");
+  std::ofstream fw("memory_core_ila.v");
   memory_core.ExportToVerilog(fw);
   fw.close();
 
