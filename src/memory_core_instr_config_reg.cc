@@ -219,11 +219,43 @@ void MemoryCoreInstrConfigReg(Ila& m) {
     SetUpdateForRdInstr(m, instr, MEMORY_CORE_REG_ITER_CNT);
   }
 
+#if 0
   { // write to config reg mode
     auto instr = m.NewInstr("WrConfigReg_mode");
     SetDecodeForWrInstr(MEMORY_CORE_REG_MODE_ADDR);
     SetUpdateForWrInstr(m, instr, MEMORY_CORE_REG_MODE);
   }
+#else
+  { // write to config reg mode - 4 modes
+    auto instr_line = m.NewInstr("WrConfigReg_mode_line");
+    auto instr_fifo = m.NewInstr("WrConfigReg_mode_fifo");
+    auto instr_sram = m.NewInstr("WrConfigReg_mode_sram");
+    auto instr_dbbf = m.NewInstr("WrConfigReg_mode_double");
+
+    // decode
+    auto write_mode_decode =
+        (m.input(MEMORY_CORE_IO_ADDR_IN) == MEMORY_CORE_REG_MODE_ADDR) &
+        is_write;
+
+    instr_line.SetDecode(
+        (m.input(MEMORY_CORE_IO_DATA_IN) == MEMORY_CORE_MODE_LINE_BUFFER) &
+        write_mode_decode);
+    instr_fifo.SetDecode(
+        (m.input(MEMORY_CORE_IO_DATA_IN) == MEMORY_CORE_MODE_FIFO) &
+        write_mode_decode);
+    instr_sram.SetDecode(
+        (m.input(MEMORY_CORE_IO_DATA_IN) == MEMORY_CORE_MODE_SRAM) &
+        write_mode_decode);
+    instr_dbbf.SetDecode(
+        (m.input(MEMORY_CORE_IO_DATA_IN) == MEMORY_CORE_MODE_DOUBLE_BUFFER) &
+        write_mode_decode);
+
+    SetUpdateForWrInstr(m, instr_line, MEMORY_CORE_REG_MODE);
+    SetUpdateForWrInstr(m, instr_fifo, MEMORY_CORE_REG_MODE);
+    SetUpdateForWrInstr(m, instr_sram, MEMORY_CORE_REG_MODE);
+    SetUpdateForWrInstr(m, instr_dbbf, MEMORY_CORE_REG_MODE);
+  }
+#endif
 
   { // read from config reg mode
     auto instr = m.NewInstr("RdConfigReg_mode");
